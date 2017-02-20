@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Тестовое задание Инфотекс</title>
+        <style media="screen">
+            * {
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <form method="GET">
+            <input autofocus type="text" id="input_number">
+            <input id="btn-submit" type="submit" value="Разложить на множители">
+        </form>
+        <ul id="calc_log"></ul>
+        
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script>
+            $('#btn-submit').click(function (event) {
+                event.preventDefault(); // отменяем действе формы по умолчанию для ручной обработки
+                var x = $('#input_number').val()
+                $.getJSON( "/calc.json?n=" + x, function( data ) {
+                    var new_log_row = document.createElement('li'); // создаём новую строку с ответом в виде элемента списка
+                    new_log_row.innerHTML = 'in: ' + data.in + ', out: ' + data.out; // пишем и форматируем ответ
+                    $('#calc_log').append(new_log_row); // добавляем ответ к списку ответов
+                });
+                $('#input_number').val(''); // чистим поле ввода для следующих значений
+            });
+        </script>
+    </body>
+</html>
